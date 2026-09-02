@@ -1,16 +1,43 @@
-# salary_app
+# Salary overview
 
-A new Flutter project.
+Small Flutter client for the salary list assignment. It signs in against the
+test API, shows the paged list of salaries and opens a detail screen for a
+single record.
 
-## Getting Started
+## Running
 
-This project is a starting point for a Flutter application.
+```
+flutter pub get
+flutter run
+```
 
-A few resources to get you started if this is your first Flutter project:
+The login screen is pre-filled with the test account so you can just hit
+**Sign in**.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Structure
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+I went with a light clean-architecture split and BLoC/Cubit, which is roughly
+what I'd use on a real project:
+
+- `core/` – Dio client with the auth interceptor, token storage, shared error type
+- `features/auth/` – login cubit + screen, auth repository
+- `features/items/` – salary list and detail, repository, models
+- `injection.dart` – GetIt wiring
+
+State management is `flutter_bloc`, DI is `get_it`, networking is `dio`.
+
+## Notes
+
+The list is paged (page/limit) and loads more as you scroll. The token is kept
+in `shared_preferences` and refreshed by the interceptor when the API returns
+401, so the screens don't have to think about it.
+
+## What I'd add with more time
+
+- Proper error/empty states instead of the basic ones I have now
+- A logout button and a real "remember me" instead of the hard-coded account
+- Widget tests for the list and login flows (only added a couple of unit tests)
+- Pull config (base URL, credentials) out of the code and into an env file
+
+Spent a bit longer than I meant to on the interceptor. Happy to walk through
+any of it.
