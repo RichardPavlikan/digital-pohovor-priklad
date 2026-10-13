@@ -31,13 +31,3 @@ State management is `flutter_bloc`, DI is `get_it`, networking is `dio`.
 The list is paged (page/limit) and loads more as you scroll. The token is kept
 in `shared_preferences` and refreshed by the interceptor when the API returns
 401, so the screens don't have to think about it.
-
-## What I'd add with more time
-
-- Proper error/empty states instead of the basic ones I have now
-- A logout button and a real "remember me" instead of the hard-coded account
-- Widget tests for the list and login flows (only added a couple of unit tests)
-- Pull config (base URL, credentials) out of the code and into an env file
-
-Spent a bit longer than I meant to on the interceptor. Happy to walk through
-any of it.
